@@ -40,10 +40,6 @@ Clone the repository:
 
 git clone https://github.com/Saurabh-Singh33/Aaroha-voice-assistant.git
 
-Move into the project folder:
-
-cd Aaroha-voice-assistant
-
 Install dependencies:
 
 pip install -r requirements.txt
