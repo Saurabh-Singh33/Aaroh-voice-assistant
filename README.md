@@ -46,9 +46,6 @@ pip install -r requirements.txt
 Run the Project
 python main.py
 Example Commands
-“Open YouTube”
-“Open Chrome”
-“Search Python tutorials”
 “What is the time?”
 “Shutdown system”
 Future Improvements
