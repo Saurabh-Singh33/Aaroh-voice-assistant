@@ -8,7 +8,7 @@ Voice command recognition
 Text-to-speech responses
 Open websites and desktop applications
 Basic desktop automation
-AI integration support (future scope)
+AI integration
 Modular and scalable architecture
 Offline command support
 Tech Stack
