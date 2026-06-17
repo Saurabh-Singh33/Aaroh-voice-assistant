@@ -51,7 +51,6 @@ Example Commands
 Future Improvements
 AI chatbot integration
 Wake word detection
-GUI dashboard
 Smart home control
 Offline NLP model
 Multi-language support
