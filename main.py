@@ -9,11 +9,19 @@ while True:
     elif command == "open google":
         webbrowser.open("https://www.google.com")
 
-    elif command == "open google":
+    elif command == "open leetcode":
+        webbrowser.open("https://www.leetcode.com")
+
+    elif command == "open github":
+        webbrowser.open("https://www.github.com")
+        
+        elif command == "open google":
         webbrowser.open("https://www.leetcode.com")
 
     elif command == "open google":
         webbrowser.open("https://www.github.com")
+
+
 
 
     elif command == "exit":
