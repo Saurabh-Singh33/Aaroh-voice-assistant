@@ -50,7 +50,7 @@ Example Commands
 “Shutdown system”
 Future Improvements
 AI chatbot integration
-Wake word detection
+ 
 Smart home control
-Offline NLP model
+ 
 Multi-language support
