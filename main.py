@@ -1,28 +1,21 @@
 import webbrowser
 
+print("=== Aaroh Voice Assistant ===")
+print("Available Commands:")
+print("- open youtube")
+print("- open google")
+print("- exit / quit / bye")
+
 while True:
-    command = input("You: ").lower()
+    command = input("\nYou: ").strip().lower()
 
     if command == "open youtube":
+        print("Opening YouTube...")
         webbrowser.open("https://www.youtube.com")
 
     elif command == "open google":
+        print("Opening Google...")
         webbrowser.open("https://www.google.com")
-
-    elif command == "open leetcode":
-        webbrowser.open("https://www.leetcode.com")
-
-    elif command == "open github":
-        webbrowser.open("https://www.github.com")
-        
-        elif command == "open google":
-        webbrowser.open("https://www.leetcode.com")
-
-    elif command == "open google":
-        webbrowser.open("https://www.github.com")
-
-
-
 
     elif command == "exit":
         print("Bye!")
