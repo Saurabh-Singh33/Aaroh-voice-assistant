@@ -1,56 +1,44 @@
 # Aaroh-voice-assistant
 
-A Python-based voice assistant for automation and voice commands.
-Aaroha can listen to user commands, perform desktop automation tasks, open applications/websites, and respond using speech.
+A simple Python voice assistant (Aaroh) that listens for voice or typed commands, opens websites, reports the time, and speaks responses.
 
 Features
-Voice command recognition
-Text-to-speech responses
-Open websites and desktop applications
-Basic desktop automation
-AI integration
-Modular and scalable architecture
-Offline command support
-Tech Stack
-Python
-speech_recognition
-pyttsx3
-pyautogui
-webbrowser
-os
-subprocess
-Project Structure
-Aaroha-voice-assistant/
-│
-├── main.py                 # Entry point
-├── assistant/
-│   ├── listener.py         # Speech recognition
-│   ├── speaker.py          # Text-to-speech
-│   ├── commands.py         # Command handling
-│   └── automation.py       # Automation features
-│
-├── assets/
-│
-├── requirements.txt
-├── README.md
-└── .gitignore
-Installation
 
-Clone the repository:
+- Voice command recognition (microphone)
+- Text-to-speech responses (pyttsx3)
+- Fuzzy command matching and typed fallback
+- Web search and quick website open commands
 
-git clone https://github.com/Saurabh-Singh33/Aaroha-voice-assistant.git
+Quickstart
 
-Install dependencies:
+1. Clone the repository:
 
-pip install -r requirements.txt
-Run the Project
-python main.py
-Example Commands
-“What is the time?”
-“Shutdown system”
-Future Improvements
-AI chatbot integration
- 
-Smart home control
- 
-Multi-language support
+   git clone https://github.com/Saurabh-Singh33/Aaroha-voice-assistant.git
+
+2. Install dependencies:
+
+   pip install -r requirements.txt
+
+   Note: On Windows `pyaudio` can be hard to build from source. If installation fails, try `pip install pipwin` followed by:
+
+   pipwin install pyaudio
+
+3. Run the assistant:
+
+   python main.py
+
+Usage
+
+- Say or type commands such as: "open youtube", "open google", "time", "search pizza recipes", "hello", or "exit".
+- If microphone or speech libraries are unavailable, the assistant falls back to typed input.
+
+Files
+
+- `main.py`: updated entrypoint with speech I/O, fuzzy matching, and error handling.
+- `requirements.txt`: dependency list.
+
+Future improvements
+
+- Add modular assistant packages (listener/speaker/commands)
+- Add richer intent handling and integrations (calendar, email, smart home)
+- Add tests and CI
