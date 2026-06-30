@@ -1,0 +1,29 @@
+{
+  "websites": {
+    "YouTube": "https://www.youtube.com",
+    "Google": "https://www.google.com",
+    "GitHub": "https://github.com",
+    "Gmail": "https://mail.google.com",
+    "LinkedIn": "https://www.linkedin.com",
+    "Facebook": "https://www.facebook.com",
+    "Twitter": "https://www.twitter.com",
+    "Stack Overflow": "https://stackoverflow.com",
+    "Wikipedia": "https://en.wikipedia.org",
+    "Reddit": "https://www.reddit.com",
+    "Amazon": "https://www.amazon.com",
+    "Netflix": "https://www.netflix.com",
+    "Telegram": "https://web.telegram.org",
+    "WhatsApp": "https://web.whatsapp.com",
+    "Instagram": "https://www.instagram.com",
+    "ChatGPT": "https://chat.openai.com",
+    "Microsoft": "https://www.microsoft.com",
+    "Apple": "https://www.apple.com",
+    "Dev": "https://dev.to",
+    "Medium": "https://medium.com"
+  },
+  "notes": {
+    "info": "Add or modify websites as needed.",
+    "usage": "User can say 'Open YouTube', 'Go to GitHub', 'Visit Gmail', etc.",
+    "how_to_add": "Add new entries with format: 'Website Name': 'https://url.com'"
+  }
+}

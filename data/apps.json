@@ -1,0 +1,26 @@
+{
+  "applications": {
+    "Chrome": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    "Google Chrome": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    "Firefox": "C:\\Program Files\\Mozilla Firefox\\firefox.exe",
+    "Edge": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+    "VS Code": "C:\\Users\\SAURABH\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+    "Visual Studio Code": "C:\\Users\\SAURABH\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+    "Notepad": "notepad.exe",
+    "Calculator": "calc.exe",
+    "Paint": "mspaint.exe",
+    "Command Prompt": "cmd.exe",
+    "PowerShell": "powershell.exe",
+    "Notepad++": "C:\\Program Files\\Notepad++\\notepad++.exe",
+    "VLC": "C:\\Program Files\\VideoLAN\\VLC\\vlc.exe",
+    "Spotify": "C:\\Users\\SAURABH\\AppData\\Roaming\\Spotify\\Spotify.exe",
+    "Discord": "C:\\Users\\SAURABH\\AppData\\Local\\Discord\\app-1.0.9152\\Discord.exe",
+    "Telegram": "C:\\Users\\SAURABH\\AppData\\Roaming\\Telegram Desktop\\Telegram.exe"
+  },
+  "notes": {
+    "info": "Update the paths based on your system. Some apps may be in different locations.",
+    "default_apps": "Notepad, Calculator, Paint, Command Prompt, and PowerShell use their default Windows paths.",
+    "custom_paths": "Update Chrome, VS Code, and other applications to match your installation paths.",
+    "how_to_find": "You can find an app's path by right-clicking its shortcut and selecting 'Properties' > 'Advanced' > 'Run as administrator'."
+  }
+}

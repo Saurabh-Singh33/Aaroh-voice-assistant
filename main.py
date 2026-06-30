@@ -1,157 +1,125 @@
-import random
-import webbrowser
-from datetime import datetime
+"""
+Aroha Voice Assistant - Main Entry Point
 
-try:
-    import speech_recognition as sr
-except Exception:
-    sr = None
+This is the main module that initializes and runs the Aroha voice assistant.
+It coordinates between listening, wake word detection, command processing, and features.
 
-try:
-    import pyttsx3
-    engine = pyttsx3.init()
-except Exception:
-    engine = None
+Run with: python main.py
+"""
 
-COMMAND_LINKS = {
-    "youtube": "https://www.youtube.com",
-    "google": "https://www.google.com",
-    "github": "https://github.com",
-    "stackoverflow": "https://stackoverflow.com",
-    "news": "https://news.google.com",
-}
+import sys
+import os
 
-JOKES = [
-    "Why did the programmer quit his job? Because he didn't get arrays.",
-    "Why do Java developers wear glasses? Because they can't C#.",
-    "I would tell you a UDP joke, but you might not get it.",
-    "Why did the computer show up at work late? It had a hard drive.",
-]
+# Add parent directory to path for module imports
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-RESPONSES = {
-    "greeting": [
-        "Hello! How can I help you today?",
-        "Hi there! What would you like to do?",
-    ],
-    "unknown": [
-        "Sorry, I don't know that command. Say help to see what I can do.",
-        "I couldn't understand that. Try asking for help.",
-    ],
-}
+from assistant.listen import listen
+from assistant.speak import speak
+from assistant.commands import process_command
+from assistant.wake_word import detect_wake_word
+import config
 
 
-def speak(text):
-    print("Assistant:", text)
-    if engine:
-        engine.say(text)
-        engine.runAndWait()
-
-
-def listen():
-    if sr:
+class ArohaAssistant:
+    """
+    Main Aroha Voice Assistant class that orchestrates all functionality.
+    
+    This class manages the core loop of listening for the wake word,
+    processing commands, and executing features.
+    """
+    
+    def __init__(self):
+        """Initialize the Aroha assistant."""
+        self.is_running = True
+        self.wake_word_detected = False
+        
+        print("\n" + "="*60)
+        print("🎤 AROHA VOICE ASSISTANT STARTING...")
+        print("="*60)
+        print(f"Wake words: {', '.join(config.WAKE_WORDS)}")
+        print("Say 'Hey Aroha' to begin. Say 'Exit' to quit.\n")
+        
+        speak("Aroha is ready. Say 'Hey Aroha' to begin.")
+    
+    def run(self):
+        """
+        Main loop that continuously listens for wake word and processes commands.
+        
+        The assistant:
+        1. Listens for the wake word
+        2. Once detected, listens for commands
+        3. Processes and executes the command
+        4. Returns to listening for wake word
+        """
         try:
-            recognizer = sr.Recognizer()
-            with sr.Microphone() as source:
-                print("Listening...")
-                audio = recognizer.listen(source)
-            return recognizer.recognize_google(audio).lower()
-        except Exception:
-            speak("I couldn't understand your voice, please type your command.")
-
-    return input("You: ").strip().lower()
-
-
-def show_help():
-    speak("Here are the commands I understand:")
-    for phrase in [
-        "hello / hi",
-        "time",
-        "date",
-        "search <query>",
-        "open <site>",
-        "youtube",
-        "google",
-        "github",
-        "stackoverflow",
-        "news",
-        "wikipedia <topic>",
-        "joke",
-        "help",
-        "exit / quit / bye",
-    ]:
-        print(" -", phrase)
-
-
-def open_link(command):
-    for name, url in COMMAND_LINKS.items():
-        if name in command:
-            speak(f"Opening {name.title()}")
-            webbrowser.open(url)
-            return True
-    return False
-
-
-def search_google(command):
-    if command.startswith("search"):
-        query = command.replace("search", "", 1).strip()
-        if query:
-            speak(f"Searching Google for {query}")
-            webbrowser.open(f"https://www.google.com/search?q={query.replace(' ', '+')}")
-        else:
-            speak("What should I search for?")
-        return True
-    return False
-
-
-def search_wikipedia(command):
-    if command.startswith("wikipedia"):
-        query = command.replace("wikipedia", "", 1).strip()
-        if query:
-            speak(f"Searching Wikipedia for {query}")
-            webbrowser.open(f"https://en.wikipedia.org/wiki/{query.replace(' ', '_')}")
-        else:
-            speak("Which Wikipedia topic would you like?")
-        return True
-    return False
+            while self.is_running:
+                # Listen for wake word
+                print("\n📢 Listening for wake word...")
+                user_input = listen()
+                
+                if user_input is None:
+                    continue
+                
+                # Check for exit commands
+                if self._should_exit(user_input):
+                    self.exit_assistant()
+                    break
+                
+                # Detect wake word
+                if detect_wake_word(user_input):
+                    print("\n✓ Wake word detected!")
+                    speak("I'm listening. What would you like?")
+                    
+                    # Listen for command
+                    print("📢 Listening for command...")
+                    command = listen()
+                    
+                    if command and not self._should_exit(command):
+                        # Process the command
+                        process_command(command)
+                    elif command:
+                        self.exit_assistant()
+                        break
+        
+        except KeyboardInterrupt:
+            print("\n\n⚠️  Interrupted by user")
+            self.exit_assistant()
+        except Exception as e:
+            print(f"\n❌ An error occurred: {e}")
+            speak("An error occurred. Please try again.")
+    
+    def _should_exit(self, user_input):
+        """
+        Check if user wants to exit.
+        
+        Args:
+            user_input (str): The user's speech input
+            
+        Returns:
+            bool: True if exit command detected
+        """
+        exit_commands = ["exit", "quit", "goodbye", "stop", "stop listening", "bye"]
+        return any(cmd in user_input.lower() for cmd in exit_commands)
+    
+    def exit_assistant(self):
+        """Exit the assistant gracefully."""
+        print("\n" + "="*60)
+        speak("Thank you for using Aroha. Goodbye!")
+        print("👋 Aroha assistant shutting down...")
+        print("="*60 + "\n")
+        self.is_running = False
 
 
 def main():
-    speak("Aaroh Assistant started. Say help to see my commands.")
-
-    while True:
-        command = listen()
-
-        if "youtube" in command:
-            speak("Opening YouTube")
-            webbrowser.open("https://www.youtube.com")
-
-        elif "google" in command:
-            speak("Opening Google")
-            webbrowser.open("https://www.google.com")
-
-        elif "time" in command:
-            current = datetime.now().strftime("%H:%M")
-            speak(f"The time is {current}")
-
-        elif command.startswith("search"):
-            query = command.replace("search", "").strip()
-            if query:
-                speak(f"Searching {query}")
-                webbrowser.open(
-                    f"https://www.google.com/search?q={query.replace(' ', '+')}"
-                )
-            else:
-                speak("What should I search?")
-
-        elif command in ["exit", "quit", "bye"]:
-            speak("Goodbye")
-            break
-
-        elif "hello" in command or "hi" in command:
-            speak("Hello! How can I help you?")
-
-        else:
-            speak("Sorry, I don't know that command.")
+    """
+    Main entry point for the Aroha voice assistant.
+    """
+    try:
+        assistant = ArohaAssistant()
+        assistant.run()
+    except Exception as e:
+        print(f"Fatal error: {e}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
