@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from assistant.listen import listen
 from assistant.speak import speak
 from assistant.commands import process_command
-from assistant.wake_word import detect_wake_word
+from assistant.wake_word import detect_wake_word, extract_command_from_wake_word
 import config
 
 
@@ -68,12 +68,18 @@ class ArohaAssistant:
                 # Detect wake word
                 if detect_wake_word(user_input):
                     print("\n✓ Wake word detected!")
+
+                    command = extract_command_from_wake_word(user_input)
+                    if command and command not in {"", "hey", "aroha"} and not self._should_exit(command):
+                        process_command(command)
+                        continue
+
                     speak("I'm listening. What would you like?")
-                    
+
                     # Listen for command
                     print("📢 Listening for command...")
                     command = listen()
-                    
+
                     if command and not self._should_exit(command):
                         # Process the command
                         process_command(command)

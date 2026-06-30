@@ -28,52 +28,62 @@ class Listener:
     def listen(self):
         """
         Listen for speech and convert to text.
-        
+
         Returns:
             str: The recognized text in lowercase, or None if recognition failed
         """
-        try:
-            with sr.Microphone() as source:
-                # Adjust for ambient noise
-                self.recognizer.adjust_for_ambient_noise(source, duration=1)
-                
-                print("🎙️  Listening...")
-                
-                # Listen for audio
-                audio = self.recognizer.listen(
-                    source,
-                    timeout=config.RECOGNIZER_TIMEOUT,
-                    phrase_time_limit=config.RECOGNIZER_PHRASE_TIME_LIMIT
+        for attempt in range(2):
+            try:
+                with sr.Microphone() as source:
+                    # Adjust for ambient noise
+                    self.recognizer.adjust_for_ambient_noise(source, duration=0.5)
+
+                    print("🎙️  Listening...")
+
+                    # Listen for audio
+                    audio = self.recognizer.listen(
+                        source,
+                        timeout=config.RECOGNIZER_TIMEOUT,
+                        phrase_time_limit=config.RECOGNIZER_PHRASE_TIME_LIMIT
+                    )
+
+            except sr.WaitTimeoutError:
+                if attempt == 0:
+                    print("⚠️  I didn't hear anything. Please try again.")
+                    continue
+                return None
+            except sr.RequestError:
+                print("❌ Microphone not available")
+                return None
+            except sr.UnknownValueError:
+                return None
+            except Exception as e:
+                if config.DEBUG_MODE:
+                    print(f"⚠️  Listening error: {e}")
+                return None
+
+            # Recognize speech
+            try:
+                text = self.recognizer.recognize_google(
+                    audio,
+                    language=config.SYSTEM_LANGUAGE
                 )
-        
-        except sr.RequestError:
-            print("❌ Microphone not available")
-            return None
-        except sr.UnknownValueError:
-            return None
-        except Exception as e:
-            if config.DEBUG_MODE:
-                print(f"⚠️  Listening error: {e}")
-            return None
-        
-        # Recognize speech
-        try:
-            text = self.recognizer.recognize_google(
-                audio,
-                language=config.SYSTEM_LANGUAGE
-            )
-            return text.lower()
-        
-        except sr.UnknownValueError:
-            print("⚠️  Could not understand audio. Please try again.")
-            return None
-        except sr.RequestError as e:
-            print(f"⚠️  API error: {e}")
-            return None
-        except Exception as e:
-            if config.DEBUG_MODE:
-                print(f"⚠️  Recognition error: {e}")
-            return None
+                return text.lower()
+
+            except sr.UnknownValueError:
+                if attempt == 0:
+                    print("⚠️  Could not understand audio. Please try again.")
+                    continue
+                return None
+            except sr.RequestError as e:
+                print(f"⚠️  API error: {e}")
+                return None
+            except Exception as e:
+                if config.DEBUG_MODE:
+                    print(f"⚠️  Recognition error: {e}")
+                return None
+
+        return None
 
 
 # Global listener instance
