@@ -9,6 +9,25 @@ import speech_recognition as sr
 import config
 
 
+def get_microphone_device_index():
+    """Pick the most likely physical microphone device on Windows."""
+    try:
+        devices = sr.Microphone.list_microphone_names()
+    except Exception:
+        return 0
+
+    for index, device_name in enumerate(devices):
+        name = (device_name or "").lower()
+        if not name:
+            continue
+        if any(token in name for token in ["microphone", "mic", "array"]):
+            if any(token in name for token in ["mapper", "output", "speaker", "stereo", "headphone"]):
+                continue
+            return index
+
+    return 0
+
+
 class Listener:
     """
     Handles speech recognition operations.
@@ -21,7 +40,12 @@ class Listener:
         """Initialize the speech recognizer."""
         self.recognizer = sr.Recognizer()
         self.recognizer.energy_threshold = config.RECOGNIZER_ENERGY_THRESHOLD
-        
+        self.recognizer.dynamic_energy_threshold = True
+        self.recognizer.dynamic_energy_adjustment_damping = 0.15
+        self.recognizer.dynamic_energy_ratio = 1.5
+        self.recognizer.pause_threshold = 0.8
+        self.microphone_index = get_microphone_device_index()
+
         if config.DEBUG_MODE:
             print("✓ Speech recognizer initialized")
     
@@ -32,15 +56,13 @@ class Listener:
         Returns:
             str: The recognized text in lowercase, or None if recognition failed
         """
-        for attempt in range(2):
+        for attempt in range(3):
             try:
-                with sr.Microphone() as source:
-                    # Adjust for ambient noise
+                with sr.Microphone(device_index=self.microphone_index) as source:
                     self.recognizer.adjust_for_ambient_noise(source, duration=0.5)
 
                     print("🎙️  Listening...")
 
-                    # Listen for audio
                     audio = self.recognizer.listen(
                         source,
                         timeout=config.RECOGNIZER_TIMEOUT,
@@ -48,21 +70,20 @@ class Listener:
                     )
 
             except sr.WaitTimeoutError:
-                if attempt == 0:
+                if attempt < 2:
                     print("⚠️  I didn't hear anything. Please try again.")
                     continue
-                return None
+                break
             except sr.RequestError:
                 print("❌ Microphone not available")
-                return None
+                break
             except sr.UnknownValueError:
-                return None
+                break
             except Exception as e:
                 if config.DEBUG_MODE:
                     print(f"⚠️  Listening error: {e}")
-                return None
+                break
 
-            # Recognize speech
             try:
                 text = self.recognizer.recognize_google(
                     audio,
@@ -71,16 +92,22 @@ class Listener:
                 return text.lower()
 
             except sr.UnknownValueError:
-                if attempt == 0:
+                if attempt < 2:
                     print("⚠️  Could not understand audio. Please try again.")
                     continue
-                return None
             except sr.RequestError as e:
-                print(f"⚠️  API error: {e}")
-                return None
+                print(f"⚠️  Speech recognition API error: {e}")
             except Exception as e:
                 if config.DEBUG_MODE:
                     print(f"⚠️  Recognition error: {e}")
+
+        if config.FALLBACK_TO_MANUAL_INPUT:
+            print("🖥️  Voice input is unavailable right now. Type a command instead.")
+            try:
+                manual_input = input("You: ").strip()
+                if manual_input:
+                    return manual_input.lower()
+            except EOFError:
                 return None
 
         return None

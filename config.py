@@ -14,9 +14,10 @@ WAKE_WORD_CONFIDENCE = 0.7  # Confidence threshold for wake word detection (0.0 
 # ============================================================================
 # SPEECH RECOGNITION SETTINGS
 # ============================================================================
-RECOGNIZER_TIMEOUT = 5  # Seconds to wait for speech input
+RECOGNIZER_TIMEOUT = 8  # Seconds to wait for speech input
 RECOGNIZER_PHRASE_TIME_LIMIT = 10  # Max duration of audio to record
-RECOGNIZER_ENERGY_THRESHOLD = 4000  # Microphone energy threshold
+RECOGNIZER_ENERGY_THRESHOLD = 3000  # Microphone energy threshold
+FALLBACK_TO_MANUAL_INPUT = True  # Let the user type commands if voice recognition fails
 
 # ============================================================================
 # TEXT-TO-SPEECH SETTINGS
