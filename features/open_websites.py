@@ -38,7 +38,7 @@ def open_website(command):
                 return True
             except Exception as e:
                 if config.DEBUG_MODE:
-                    print(f"⚠️  Error opening {name}: {e}")
+                    print(f"[ERROR] Error opening {name}: {e}")
                 speak(f"Could not open {name}")
                 return False
     

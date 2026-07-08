@@ -56,6 +56,6 @@ def play_music():
     
     except Exception as e:
         if config.DEBUG_MODE:
-            print(f"⚠️  Music player error: {e}")
+            print(f"[ERROR] Music player error: {e}")
         speak("Error playing music")
         return False

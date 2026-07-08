@@ -49,6 +49,6 @@ def search_wikipedia(query):
         return False
     except Exception as e:
         if config.DEBUG_MODE:
-            print(f"⚠️  Wikipedia error: {e}")
+            print(f"[ERROR] Wikipedia error: {e}")
         speak(f"Error searching Wikipedia: {str(e)}")
         return False

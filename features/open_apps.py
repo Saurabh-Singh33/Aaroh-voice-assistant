@@ -42,12 +42,12 @@ def open_application(command):
                 else:
                     speak(f"Could not find {app_name} at {app_path}")
                     if config.DEBUG_MODE:
-                        print(f"⚠️  App path not found: {app_path}")
+                        print(f"[WARNING] App path not found: {app_path}")
                     return False
             
             except Exception as e:
                 if config.DEBUG_MODE:
-                    print(f"⚠️  Error opening {app_name}: {e}")
+                    print(f"[ERROR] Error opening {app_name}: {e}")
                 speak(f"Could not open {app_name}")
                 return False
     

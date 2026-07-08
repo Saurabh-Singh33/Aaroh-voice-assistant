@@ -31,5 +31,5 @@ def search_google(query):
         
         return True
     except Exception as e:
-        print(f"❌ Error opening Google search: {e}")
+        print(f"[ERROR] Error opening Google search: {e}")
         return False

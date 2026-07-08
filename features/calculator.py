@@ -58,6 +58,6 @@ def calculate(expression):
         return False
     except Exception as e:
         if config.DEBUG_MODE:
-            print(f"⚠️  Calculator error: {e}")
+            print(f"[ERROR] Calculator error: {e}")
         speak("Error calculating the expression")
         return False

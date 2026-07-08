@@ -47,7 +47,7 @@ def shutdown_pc():
             return False
     except Exception as e:
         if config.DEBUG_MODE:
-            print(f"⚠️  Shutdown error: {e}")
+            print(f"[ERROR] Shutdown error: {e}")
         speak("Error shutting down")
         return False
 
@@ -72,7 +72,7 @@ def restart_pc():
             return False
     except Exception as e:
         if config.DEBUG_MODE:
-            print(f"⚠️  Restart error: {e}")
+            print(f"[ERROR] Restart error: {e}")
         speak("Error restarting")
         return False
 
@@ -93,7 +93,7 @@ def sleep_pc():
         return True
     except Exception as e:
         if config.DEBUG_MODE:
-            print(f"⚠️  Sleep error: {e}")
+            print(f"[ERROR] Sleep error: {e}")
         speak("Error putting computer to sleep")
         return False
 
@@ -114,6 +114,6 @@ def lock_pc():
         return True
     except Exception as e:
         if config.DEBUG_MODE:
-            print(f"⚠️  Lock error: {e}")
+            print(f"[ERROR] Lock error: {e}")
         speak("Error locking computer")
         return False

@@ -34,7 +34,7 @@ class ArohaAssistant:
         self.wake_word_detected = False
         
         print("\n" + "="*60)
-        print("🎤 AROHA VOICE ASSISTANT STARTING...")
+        print("AROHA VOICE ASSISTANT STARTING...")
         print("="*60)
         print(f"Wake words: {', '.join(config.WAKE_WORDS)}")
         print("Say 'Hey Aroha' to begin. Say 'Exit' to quit.\n")
@@ -54,7 +54,7 @@ class ArohaAssistant:
         try:
             while self.is_running:
                 # Listen for wake word
-                print("\n📢 Listening for wake word...")
+                print("\n[LISTENING] Listening for wake word...")
                 user_input = listen()
                 
                 if user_input is None:
@@ -67,7 +67,7 @@ class ArohaAssistant:
                 
                 # Detect wake word
                 if detect_wake_word(user_input):
-                    print("\n✓ Wake word detected!")
+                    print("\n[OK] Wake word detected!")
 
                     command = extract_command_from_wake_word(user_input)
                     if command and command not in {"", "hey", "aroha"} and not self._should_exit(command):
@@ -77,7 +77,7 @@ class ArohaAssistant:
                     speak("I'm listening. What would you like?")
 
                     # Listen for command
-                    print("📢 Listening for command...")
+                    print("[LISTENING] Listening for command...")
                     command = listen()
 
                     if command and not self._should_exit(command):
