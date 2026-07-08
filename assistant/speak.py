@@ -25,9 +25,9 @@ class Speaker:
             self.engine.setProperty('rate', config.SPEECH_RATE)
             self.engine.setProperty('volume', config.SPEECH_VOLUME)
             if config.DEBUG_MODE:
-                print("✓ Text-to-Speech engine initialized")
+                print("[OK] Text-to-Speech engine initialized")
         except Exception as e:
-            print(f"⚠️  Warning: Could not initialize TTS engine: {e}")
+            print(f"[WARNING] Could not initialize TTS engine: {e}")
             self.engine = None
     
     def speak(self, text):
@@ -43,7 +43,7 @@ class Speaker:
         if not text:
             return
         
-        print(f"🔊 Aroha: {text}")
+        print(f"[AROHA] {text}")
         
         if config.USE_SPEECH and self.engine:
             try:
@@ -52,7 +52,7 @@ class Speaker:
                 time.sleep(config.RESPONSE_DELAY)
             except Exception as e:
                 if config.DEBUG_MODE:
-                    print(f"⚠️  TTS Error: {e}")
+                    print(f"[ERROR] TTS Error: {e}")
     
     def set_rate(self, rate):
         """

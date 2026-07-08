@@ -47,7 +47,7 @@ class Listener:
         self.microphone_index = get_microphone_device_index()
 
         if config.DEBUG_MODE:
-            print("✓ Speech recognizer initialized")
+            print("[OK] Speech recognizer initialized")
     
     def listen(self):
         """
@@ -61,7 +61,7 @@ class Listener:
                 with sr.Microphone(device_index=self.microphone_index) as source:
                     self.recognizer.adjust_for_ambient_noise(source, duration=0.5)
 
-                    print("🎙️  Listening...")
+                    print("[LISTENING] Listening for input...")
 
                     audio = self.recognizer.listen(
                         source,
@@ -71,17 +71,17 @@ class Listener:
 
             except sr.WaitTimeoutError:
                 if attempt < 2:
-                    print("⚠️  I didn't hear anything. Please try again.")
+                    print("[WARNING] I didn't hear anything. Please try again.")
                     continue
                 break
             except sr.RequestError:
-                print("❌ Microphone not available")
+                print("[ERROR] Microphone not available")
                 break
             except sr.UnknownValueError:
                 break
             except Exception as e:
                 if config.DEBUG_MODE:
-                    print(f"⚠️  Listening error: {e}")
+                    print(f"[WARNING] Listening error: {e}")
                 break
 
             try:
@@ -93,16 +93,16 @@ class Listener:
 
             except sr.UnknownValueError:
                 if attempt < 2:
-                    print("⚠️  Could not understand audio. Please try again.")
+                    print("[WARNING] Could not understand audio. Please try again.")
                     continue
             except sr.RequestError as e:
-                print(f"⚠️  Speech recognition API error: {e}")
+                print(f"[WARNING] Speech recognition API error: {e}")
             except Exception as e:
                 if config.DEBUG_MODE:
-                    print(f"⚠️  Recognition error: {e}")
+                    print(f"[ERROR] Recognition error: {e}")
 
         if config.FALLBACK_TO_MANUAL_INPUT:
-            print("🖥️  Voice input is unavailable right now. Type a command instead.")
+            print("[TEXT INPUT] Voice input is unavailable right now. Type a command instead.")
             try:
                 manual_input = input("You: ").strip()
                 if manual_input:
