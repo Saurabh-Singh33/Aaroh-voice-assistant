@@ -39,8 +39,7 @@ A professional, modular Python voice assistant with speech recognition, text-to-
 - System commands for system control
 
 #### 📊 Productivity Tools
-
-- Calculator for mathematical expressions
+ 
 - Weather information from OpenWeatherMap API
 - System control (shutdown, restart, sleep, lock)
 
