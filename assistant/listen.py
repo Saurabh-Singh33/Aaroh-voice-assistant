@@ -44,7 +44,7 @@ class Listener:
         self.recognizer.dynamic_energy_adjustment_damping = 0.15
         self.recognizer.dynamic_energy_ratio = 1.5
         self.recognizer.pause_threshold = 0.8
-        self.microphone_index = get_microphone_device_index()
+        self.microphone_index = None
 
         if config.DEBUG_MODE:
             print("[OK] Speech recognizer initialized")
