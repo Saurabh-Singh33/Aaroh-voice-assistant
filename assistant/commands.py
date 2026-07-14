@@ -104,6 +104,17 @@ def process_command(command):
         play_music()
         return True
     
+    # ========== Fun Commands ==========
+    if _is_joke_command(command) and getattr(config, 'ENABLE_FUN', True):
+        from features.fun import tell_joke
+        tell_joke()
+        return True
+        
+    if _is_coin_command(command) and getattr(config, 'ENABLE_FUN', True):
+        from features.fun import flip_coin
+        flip_coin()
+        return True
+    
     # ========== System Control Commands ==========
     if _is_shutdown_command(command) and config.ENABLE_SYSTEM_CONTROL:
         from features.system_control import shutdown_pc
@@ -193,6 +204,18 @@ def _is_music_command(command):
     return any(keyword in command for keyword in music_keywords)
 
 
+def _is_joke_command(command):
+    """Check if command is asking for a joke."""
+    joke_keywords = ["tell me a joke", "make me laugh", "say a joke", "tell a joke"]
+    return any(keyword in command for keyword in joke_keywords)
+
+
+def _is_coin_command(command):
+    """Check if command is asking to flip a coin."""
+    coin_keywords = ["flip a coin", "toss a coin", "coin flip"]
+    return any(keyword in command for keyword in coin_keywords)
+
+
 def _is_shutdown_command(command):
     """Check if command is to shutdown PC."""
     shutdown_keywords = ["shutdown", "shut down", "power off"]
@@ -264,6 +287,8 @@ def show_help():
     - "What's the weather in [city]?"
     - "Play music"
     - "Calculate [expression]"
+    - "Tell me a joke"
+    - "Flip a coin"
     - "Shutdown/Restart/Sleep/Lock PC"
     
     OTHER:
@@ -271,5 +296,5 @@ def show_help():
     - "Exit/Goodbye" - Stop listening
     """
     
-    speak("I can help with time, date, search, websites, applications, weather, music, calculator, and system control.")
+    speak("I can help with time, date, search, websites, applications, weather, music, calculator, fun features, and system control.")
     print(help_text)

@@ -53,6 +53,7 @@ ENABLE_WEATHER = True
 ENABLE_CALCULATOR = True
 ENABLE_MUSIC = True
 ENABLE_SYSTEM_CONTROL = True
+ENABLE_FUN = True
 
 # ============================================================================
 # LOGGING AND DEBUGGING
