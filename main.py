@@ -60,6 +60,15 @@ class ArohaAssistant:
                 if user_input is None:
                     continue
                 
+                # Check if it was manual fallback input
+                if user_input.startswith("__MANUAL___"):
+                    command = user_input.replace("__MANUAL___", "", 1)
+                    if self._should_exit(command):
+                        self.exit_assistant()
+                        break
+                    process_command(command)
+                    continue
+
                 # Check for exit commands
                 if self._should_exit(user_input):
                     self.exit_assistant()
@@ -80,12 +89,16 @@ class ArohaAssistant:
                     print("[LISTENING] Listening for command...")
                     command = listen()
 
-                    if command and not self._should_exit(command):
-                        # Process the command
-                        process_command(command)
-                    elif command:
-                        self.exit_assistant()
-                        break
+                    if command:
+                        if command.startswith("__MANUAL___"):
+                            command = command.replace("__MANUAL___", "", 1)
+                            
+                        if not self._should_exit(command):
+                            # Process the command
+                            process_command(command)
+                        else:
+                            self.exit_assistant()
+                            break
         
         except KeyboardInterrupt:
             print("\n\n⚠️  Interrupted by user")

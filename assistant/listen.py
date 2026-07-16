@@ -106,7 +106,7 @@ class Listener:
             try:
                 manual_input = input("You: ").strip()
                 if manual_input:
-                    return manual_input.lower()
+                    return f"__MANUAL___{manual_input.lower()}"
             except EOFError:
                 return None
 
