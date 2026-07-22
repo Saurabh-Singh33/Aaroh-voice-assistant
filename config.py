@@ -58,7 +58,7 @@ ENABLE_FUN = True
 # ============================================================================
 # LOGGING AND DEBUGGING
 # ============================================================================
-DEBUG_MODE = False  # Set to True for verbose logging
+DEBUG_MODE = True  # Set to True for verbose logging
 LOG_FILE = "aroha.log"
 
 # ============================================================================
