@@ -24,7 +24,20 @@ def ask_confirmation(action):
         return True
     
     speak(f"Are you sure you want to {action}? Say yes to confirm.")
-    return False  # In production, would listen for confirmation
+    
+    from assistant.listen import listen
+    response = listen()
+    
+    if response:
+        response = response.lower()
+        if "yes" in response or "yeah" in response or "yep" in response or "sure" in response:
+            return True
+        elif response.startswith("__manual___"):
+            manual_response = response.replace("__manual___", "")
+            if "yes" in manual_response or manual_response == "y":
+                return True
+                
+    return False
 
 
 def shutdown_pc():
