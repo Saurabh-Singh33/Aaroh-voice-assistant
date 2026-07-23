@@ -60,6 +60,7 @@ Control your computer or open applications and websites.
   - *"Open YouTube"*
   - *"Open Google"*
   - *"Visit GitHub"*
+   **"open leetcode"*
   - (You can add custom websites in `data/websites.json`)
 - **Open Applications**: 
   - *"Open Notepad"*
