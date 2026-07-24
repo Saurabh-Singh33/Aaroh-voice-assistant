@@ -314,7 +314,7 @@ To use your own API key:
 - Local offline recognition
 - Smart home integration
 - Email and calendar integration
-- Custom voice training
+
 
 ---
 
