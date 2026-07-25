@@ -219,14 +219,7 @@ ENABLE_SYSTEM_CONTROL = True
 
 ### Add Custom Applications
 
-Edit `data/apps.json`:
 
-```json
-{
-  "applications": {
-    "MyApp": "C:\\Path\\To\\App.exe"
-  }
-}
 ```
 
 ### Add Custom Websites
