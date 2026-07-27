@@ -318,6 +318,7 @@ This project is open source and available for personal and educational use.
 ---
 
 ## 👨‍💻 Author
+Saurabh Singh
 
 Created as a professional Python voice assistant project.
 
