@@ -5,6 +5,8 @@ This module contains all configuration settings for the Aroha voice assistant.
 Centralized configuration allows for easy customization without modifying code.
 """
 
+import os
+
 # ============================================================================
 # WAKE WORD SETTINGS
 # ============================================================================
@@ -60,6 +62,21 @@ ENABLE_FUN = True
 # ============================================================================
 DEBUG_MODE = True  # Set to True for verbose logging
 LOG_FILE = "aroha.log"
+
+# ============================================================================
+# AI BRAIN SETTINGS
+# ============================================================================
+AI_ENABLED = os.getenv("AROHA_AI_ENABLED", "true").lower() in {"1", "true", "yes", "on"}
+AI_API_KEY = os.getenv("AROHA_AI_API_KEY", "")
+AI_BASE_URL = os.getenv("AROHA_AI_BASE_URL", "https://api.openai.com/v1/chat/completions")
+AI_MODEL = os.getenv("AROHA_AI_MODEL", "gpt-4o-mini")
+AI_TIMEOUT_SECONDS = float(os.getenv("AROHA_AI_TIMEOUT_SECONDS", "20"))
+AI_MAX_HISTORY_MESSAGES = int(os.getenv("AROHA_AI_MAX_HISTORY_MESSAGES", "12"))
+AI_SYSTEM_PROMPT = os.getenv(
+	"AROHA_AI_SYSTEM_PROMPT",
+	"You are Aroha, a concise and helpful voice assistant. "
+	"Answer clearly and avoid unnecessary formatting for spoken responses.",
+)
 
 # ============================================================================
 # ASSISTANT BEHAVIOR

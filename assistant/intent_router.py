@@ -39,8 +39,7 @@ def route_command(command):
         print(f"DEBUG: Intent={intent}, entities={entities}")
 
     if intent == "unknown":
-        speak("I didn't understand that. Say 'Help' for available commands.")
-        return RouterResult(False, intent, entities, "Command not understood").to_dict()
+        return RouterResult(False, intent, entities, "No local feature matched").to_dict()
 
     if intent == "help":
         _show_help()

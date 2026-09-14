@@ -10,6 +10,7 @@ A professional, modular Python voice assistant with speech recognition, text-to-
 - **🗣️ Speech Recognition** - Converts voice to text using Google's API
 - **🔊 Text-to-Speech** - Natural voice responses using pyttsx3
 - **⚙️ Modular Architecture** - Clean, professional code structure
+- **🧠 AI Brain Fallback** - Uses an LLM only when no local command matches
 
 ### Integrated Features
 
@@ -39,7 +40,7 @@ A professional, modular Python voice assistant with speech recognition, text-to-
 - System commands for system control
 
 #### 📊 Productivity Tools
- 
+
 - Weather information from OpenWeatherMap API
 - System control (shutdown, restart, sleep, lock)
 
@@ -61,9 +62,7 @@ A professional, modular Python voice assistant with speech recognition, text-to-
 cd D:\Aaroh-voice-assistant
 ```
 
-2. **Create a virtual environment** 
-
-
+2. **Create a virtual environment**
 
 3. **Install dependencies**
 
@@ -93,6 +92,8 @@ Aaroh-voice-assistant/
 │   ├── listen.py        # Speech recognition
 │   ├── wake_word.py     # Wake word detection
 │   ├── commands.py      # Command processor & router
+│   ├── intent_router.py  # Local intent classification and feature dispatch
+│   ├── ai_service.py     # Provider-independent AI Brain service
 │   └── utils.py         # Utility functions
 │
 ├── features/            # Feature modules
@@ -113,8 +114,6 @@ Aaroh-voice-assistant/
 │
 └── assets/              # Placeholder for assets
 ```
-
-
 
 ## 💬 Usage Examples
 
@@ -211,14 +210,41 @@ ENABLE_MUSIC = True
 ENABLE_SYSTEM_CONTROL = True
 ```
 
+### AI Brain
+
+The AI Brain is used only when the local intent router cannot handle a command.
+It uses an OpenAI-compatible chat-completions endpoint and keeps conversation
+context in memory for the current process. No API key is stored in the source
+code.
+
+PowerShell example:
+
+```powershell
+$env:AROHA_AI_API_KEY = "your-api-key"
+$env:AROHA_AI_MODEL = "gpt-4o-mini"
+$env:AROHA_AI_BASE_URL = "https://api.openai.com/v1/chat/completions"
+$env:AROHA_AI_TIMEOUT_SECONDS = "20"
+$env:AROHA_AI_MAX_HISTORY_MESSAGES = "12"
+python main.py
+```
+
+Available settings:
+
+- `AROHA_AI_ENABLED` - Set to `false` to disable the AI fallback.
+- `AROHA_AI_API_KEY` - Provider API key.
+- `AROHA_AI_BASE_URL` - Complete OpenAI-compatible chat endpoint.
+- `AROHA_AI_MODEL` - Model name sent to the provider.
+- `AROHA_AI_TIMEOUT_SECONDS` - HTTP request timeout.
+- `AROHA_AI_MAX_HISTORY_MESSAGES` - Maximum prior conversation messages kept in memory.
+- `AROHA_AI_SYSTEM_PROMPT` - Optional system instruction for the assistant.
+
 ---
 
 ## 📝 Customization
 
 ### Add Custom Applications
 
-
-```
+````
 
 ### Add Custom Websites
 
@@ -230,7 +256,7 @@ Edit `data/websites.json`:
     "MyWebsite": "https://www.example.com"
   }
 }
-```
+````
 
 ---
 
@@ -306,7 +332,6 @@ To use your own API key:
 - Smart home integration
 - Email and calendar integration
 
-
 ---
 
 ## 📄 License
@@ -316,6 +341,7 @@ This project is open source and available for personal and educational use.
 ---
 
 ## 👨‍💻 Author
+
 Saurabh Singh
 
 Created as a professional Python voice assistant project.
