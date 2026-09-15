@@ -7,6 +7,10 @@ Centralized configuration allows for easy customization without modifying code.
 
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # ============================================================================
 # WAKE WORD SETTINGS
 # ============================================================================
@@ -31,7 +35,7 @@ USE_SPEECH = True  # Enable/disable audio output
 # ============================================================================
 # WEATHER API SETTINGS
 # ============================================================================
-WEATHER_API_KEY = "4d8fb5b93d4af21d66a2948710284366"  # OpenWeatherMap Free API
+WEATHER_API_KEY = os.getenv("WEATHER_API_KEY", "")
 WEATHER_API_URL = "https://api.openweathermap.org/data/2.5/weather"
 
 # ============================================================================
