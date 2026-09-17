@@ -17,7 +17,9 @@ def process_command_result(command):
     if result["intent"] != "unknown":
         return result
 
-    ai_result = ai_service.ask(command)
+    from features.memory import get_context
+
+    ai_result = ai_service.ask(command, memory_context=get_context())
     if ai_result.success:
         speak(ai_result.response)
         return {

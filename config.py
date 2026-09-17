@@ -83,6 +83,14 @@ AI_SYSTEM_PROMPT = os.getenv(
 )
 
 # ============================================================================
+# MEMORY SETTINGS
+# ============================================================================
+MEMORY_DATABASE_PATH = os.getenv("AROHA_MEMORY_DATABASE", os.path.join("data", "aroha_memory.sqlite3"))
+MEMORY_MAX_ITEMS = int(os.getenv("AROHA_MEMORY_MAX_ITEMS", "100"))
+MEMORY_MAX_VALUE_LENGTH = int(os.getenv("AROHA_MEMORY_MAX_VALUE_LENGTH", "240"))
+MEMORY_CONTEXT_LIMIT = int(os.getenv("AROHA_MEMORY_CONTEXT_LIMIT", "10"))
+
+# ============================================================================
 # ASSISTANT BEHAVIOR
 # ============================================================================
 LISTEN_CONTINUOUSLY = True  # Keep listening after each command

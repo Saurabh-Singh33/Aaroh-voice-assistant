@@ -65,6 +65,16 @@ def route_command(command):
 def _classify(command):
     if _matches(command, ["help", "what can you do", "what do you do", "commands"]):
         return "help", {}
+    if command.startswith("remember ") or command.startswith("please remember "):
+        text = _extract_after(command, ["please remember", "remember"])
+        return "remember", {"text": text}
+    if _matches(command, ["what do you remember", "what do you know about me", "recall my memories"]):
+        return "recall", {}
+    if command.startswith("forget ") or command.startswith("please forget "):
+        text = _extract_after(command, ["please forget", "forget"])
+        return "forget", {"query": text}
+    if command.startswith("search my memories for "):
+        return "memory_search", {"query": _extract_after(command, ["search my memories for"])}
     if "weather" in command:
         return "weather", {"location": _extract_after(command, ["weather like in", "weather in", "weather for", "weather at"])}
     if _is_calculator(command):
@@ -107,6 +117,18 @@ def _open_intent(command):
 
 
 def _handler_for(intent, entities):
+    if intent == "remember":
+        from features.memory import remember
+        return remember, (entities.get("text", ""),)
+    if intent == "recall":
+        from features.memory import recall
+        return recall, ()
+    if intent == "forget":
+        from features.memory import forget
+        return forget, (entities.get("query", ""),)
+    if intent == "memory_search":
+        from features.memory import search
+        return search, (entities.get("query", ""),)
     if intent == "time":
         from features.date_time import get_current_time
         return _speak_value, ("The current time is", get_current_time())

@@ -11,6 +11,7 @@ A professional, modular Python voice assistant with speech recognition, text-to-
 - **🔊 Text-to-Speech** - Natural voice responses using pyttsx3
 - **⚙️ Modular Architecture** - Clean, professional code structure
 - **🧠 AI Brain Fallback** - Uses an LLM only when no local command matches
+- **🗃️ Persistent Memory** - Stores explicit, non-sensitive preferences locally in SQLite
 
 ### Integrated Features
 
@@ -165,6 +166,20 @@ Aaroh-voice-assistant/
 
 - "Help" - Display all available commands
 - "Exit" or "Goodbye" - Stop the assistant
+
+### Memory
+
+- "Remember that I prefer dark mode"
+- "Remember that my favorite language is Java"
+- "What do you remember about me?"
+- "Search my memories for language"
+- "Forget my preference for dark mode"
+
+Memory is opt-in: ordinary conversation is not persisted. Short-term AI
+conversation history remains in process memory, while approved preferences are
+stored in `data/aroha_memory.sqlite3`. Passwords, secrets, tokens, and financial
+details are rejected. Configure `AROHA_MEMORY_DATABASE`, `AROHA_MEMORY_MAX_ITEMS`,
+`AROHA_MEMORY_MAX_VALUE_LENGTH`, and `AROHA_MEMORY_CONTEXT_LIMIT` as needed.
 
 ---
 
