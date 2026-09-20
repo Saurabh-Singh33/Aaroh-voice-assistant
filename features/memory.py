@@ -58,6 +58,7 @@ def recall(query=""):
 
 
 def forget(query):
+    query = re.sub(r"^(?:my\s+)?(?:preference|favorite|favourite)\s+for\s+", "", query.strip(), flags=re.IGNORECASE)
     if _is_sensitive(query):
         speak("I don't store sensitive information, so there is nothing to remove.")
         return True
